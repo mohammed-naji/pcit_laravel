@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -43,22 +44,34 @@ use Illuminate\Support\Facades\Route;
 
 // home, about, team, services, contact us
 
-Route::get('/', function () {
-    return 'home';
-})->name('home');
+// Route::get('/', function () {
+//     return 'home';
+// })->name('home');
 
-Route::get('/about', function () {
-    return 'about';
-})->name('about');
+// Route::get('/about', function () {
+//     return 'about';
+// })->name('about');
 
-Route::get('/team', function () {
-    return 'team';
-})->name('team');
+// Route::get('/team', function () {
+//     return 'team';
+// })->name('team');
 
-Route::get('/services', function () {
-    return 'services';
-})->name('services');
+// Route::get('/services', function () {
+//     return 'services';
+// })->name('services');
 
-Route::get('/contact-us', function () {
-    return 'contact us';
-})->name('contact-us');
+// Route::get('/contact-us', function () {
+//     return 'contact us';
+// })->name('contact-us');
+
+// Route::prefix('admin')->name('admin.')->group(function () {
+//     Route::get('/home', function () {})->name('home');
+//     Route::get('/posts', function () {})->name('posts');
+//     Route::get('/products', function () {})->name('products');
+//     Route::get('/users', function () {})->name('users');
+// });
+
+Route::get('/', [MainController::class, 'index'])->name('home');
+Route::put('/edit', [MainController::class, 'edit'])->name('edit_post');
+
+include 'admin.php';
