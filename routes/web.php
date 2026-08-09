@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Course1Controller;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
 
@@ -71,7 +74,28 @@ use Illuminate\Support\Facades\Route;
 //     Route::get('/users', function () {})->name('users');
 // });
 
-Route::get('/', [MainController::class, 'index'])->name('home');
-Route::put('/edit', [MainController::class, 'edit'])->name('edit_post');
+// Route::get('/', [MainController::class, 'index'])->name('home');
+// Route::put('/edit', [MainController::class, 'edit'])->name('edit_post');
 
-include 'admin.php';
+// include 'admin.php';
+
+// Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
+
+// Route::get('/courses/create', [CourseController::class, 'create'])->name('courses.create');
+// Route::post('/courses', [CourseController::class, 'store'])->name('courses.store');
+
+// Route::get('/courses/{id}/edit', [CourseController::class, 'edit'])->name('courses.edit');
+// Route::match(['put', 'patch'], '/courses/{id}', [CourseController::class, 'update'])->name('course.updated');
+
+// Route::delete('/courses/{id}', [CourseController::class, 'destroy'])->name('courses.destroy');
+
+// Route::get('/courses/{id}', [CourseController::class, 'show'])->name('courses.show');
+
+// Route::resource('courses', CourseController::class);
+// Route::apiResource('courses', Course1Controller::class);
+
+// Route::get('/export', ExportController::class);
+
+// Route::get('/meals/{name}', [MainController::class, 'meals'])->name('main.meals');
+
+Route::get('posts', [MainController::class, 'posts'])->name('posts');

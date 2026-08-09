@@ -21,4 +21,56 @@ class MainController extends Controller
     {
         return 'About Us from Controller';
     }
+
+    public function meals($name)
+    {
+        return 'meals page | ' . $name;
+        // return view('meals');
+    }
+
+    public function posts()
+    {
+        // $name = "ahmed maher";
+        // $age = 19;
+
+        // return view('posts.index')->with('myname', $name);
+        // return view('posts.index', [
+        //     'name' => $name,
+        //     'age' => $age
+        // ]);
+
+        // var_dump(compact('name', 'age'));
+        // die;
+        // dd(compact('name', 'age'));
+
+        // return view('posts.index', compact('name', 'age'));
+
+        $posts = [
+            [
+                'id' => 1,
+                'title' => 'Real Madrid',
+                'content' => 'lorem1'
+            ],
+            [
+                'id' => 2,
+                'title' => 'Barcelona',
+                'content' => 'lorem2'
+            ],
+            [
+                'id' => 3,
+                'title' => 'Liverpool',
+                'content' => 'lorem3'
+            ],
+            [
+                'id' => 4,
+                'title' => 'AC Milan',
+                'content' => 'lorem4'
+            ],
+        ];
+
+        // dd($posts);
+        // $posts = Post::all();
+
+        return view('posts.index', compact('posts'));
+    }
 }
