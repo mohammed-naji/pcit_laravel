@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\Course1Controller;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ExportController;
@@ -102,3 +103,11 @@ use Illuminate\Support\Facades\Route;
 // Route::get('posts', [MainController::class, 'posts'])->name('posts');
 
 Route::get('/users', [UserController::class, 'all_users'])->name('all_users');
+
+
+Route::prefix('blog')->controller(BlogController::class)->name('blog.')->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/about', 'about')->name('about');
+    Route::get('/contact', 'contact')->name('contact');
+    Route::get('/post/{id}', 'post')->name('post');
+});
