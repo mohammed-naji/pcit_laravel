@@ -4,6 +4,7 @@ use App\Http\Controllers\Course1Controller;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -98,4 +99,6 @@ use Illuminate\Support\Facades\Route;
 
 // Route::get('/meals/{name}', [MainController::class, 'meals'])->name('main.meals');
 
-Route::get('posts', [MainController::class, 'posts'])->name('posts');
+// Route::get('posts', [MainController::class, 'posts'])->name('posts');
+
+Route::get('/users', [UserController::class, 'all_users'])->name('all_users');
