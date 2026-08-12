@@ -55,4 +55,9 @@ class PersonalController extends Controller
     {
         return view('personal.contact');
     }
+
+    public function contact_data()
+    {
+        return 'DDDDDD';
+    }
 }

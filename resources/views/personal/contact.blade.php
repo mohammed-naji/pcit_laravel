@@ -21,7 +21,8 @@
                         <!-- To make this form functional, sign up at-->
                         <!-- https://startbootstrap.com/solution/contact-forms-->
                         <!-- to get an API token!-->
-                        <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                        <form id="contactForm" action="{{ route('personal.contact') }}" method="POST">
+                            @csrf
                             <!-- Name input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="name" type="text" placeholder="Enter your name..."
@@ -74,7 +75,7 @@
                                 <div class="text-center text-danger mb-3">Error sending message!</div>
                             </div>
                             <!-- Submit Button-->
-                            <div class="d-grid"><button class="btn btn-primary btn-lg disabled" id="submitButton"
+                            <div class="d-grid"><button class="btn btn-primary btn-lg" id="submitButton"
                                     type="submit">Submit</button></div>
                         </form>
                     </div>
