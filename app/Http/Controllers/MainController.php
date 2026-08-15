@@ -73,4 +73,14 @@ class MainController extends Controller
 
         return view('posts.index', compact('posts'));
     }
+
+    public function edit_user($id)
+    {
+        return view('edit_user', compact('id'));
+    }
+
+    public function edit_user_data(Request $request, $id)
+    {
+        dd($id);
+    }
 }

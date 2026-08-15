@@ -6,6 +6,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\PersonalController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -118,5 +119,12 @@ Route::prefix('personal')->name('personal.')->group(function () {
     Route::get('/resume', [PersonalController::class, 'resume'])->name('resume');
     Route::get('/projects', [PersonalController::class, 'projects'])->name('projects');
     Route::get('/contact', [PersonalController::class, 'contact'])->name('contact');
-    Route::post('/contact', [PersonalController::class, 'contact_data']);
+    Route::post('/contact-action', [PersonalController::class, 'contact_action'])->name('contact_action');
 });
+
+Route::get('/register', [StudentController::class, 'register'])->name('students.register');
+Route::post('/register', [StudentController::class, 'register_data']);
+
+
+Route::get('/edit/{id}', [MainController::class, 'edit_user'])->name('edit_user');
+Route::post('/edit/{id}', [MainController::class, 'edit_user_data']);

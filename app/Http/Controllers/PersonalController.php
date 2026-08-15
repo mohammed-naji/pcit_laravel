@@ -56,8 +56,19 @@ class PersonalController extends Controller
         return view('personal.contact');
     }
 
-    public function contact_data()
+    public function contact_action(Request $request)
     {
-        return 'DDDDDD';
+        // dd($request->all());
     }
 }
+
+// PHP Super global variables
+// 1. $GLOBALS
+// 2. $_SERVER
+// 3. $_ENV
+// 4. $_SESSION
+// 5. $_COOKIE
+// 6. $_GET
+// 7. $_POST
+// 8. $_REQUEST
+// 9. $_FILES
