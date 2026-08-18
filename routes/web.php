@@ -128,3 +128,6 @@ Route::post('/register', [StudentController::class, 'register_data']);
 
 Route::get('/edit/{id}', [MainController::class, 'edit_user'])->name('edit_user');
 Route::post('/edit/{id}', [MainController::class, 'edit_user_data']);
+
+Route::get('/contact', [MainController::class, 'contact'])->name('contact');
+Route::post('/contact', [MainController::class, 'contact_data']);

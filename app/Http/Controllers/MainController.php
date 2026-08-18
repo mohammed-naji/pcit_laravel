@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\TestMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class MainController extends Controller
 {
@@ -82,5 +84,18 @@ class MainController extends Controller
     public function edit_user_data(Request $request, $id)
     {
         dd($id);
+    }
+
+    public function contact()
+    {
+        return view('contact');
+    }
+
+    public function contact_data(Request $request)
+    {
+        // dd($request->all());
+        Mail::to('mali.hajjaj2005@gmail.com')->send(new TestMail($request->all()));
+
+        return "Email Sent";
     }
 }
