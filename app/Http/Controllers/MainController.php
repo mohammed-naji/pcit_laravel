@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ContactUsMail;
 use App\Mail\TestMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -114,5 +115,30 @@ class MainController extends Controller
         // move_uploaded_file();
 
         return view('uploaded_data', compact('name', 'path'));
+    }
+
+    public function contact2()
+    {
+        return view('contact2');
+    }
+
+    public function contact2_data(Request $request)
+    {
+        // dd($request->all());
+        //1. validation
+        //2. upload files
+        //3. action => database or mail
+        //4. redirect to another page
+
+        // Upload File
+        $file = $request->file('file')->store('/uploads/files');
+
+        $data = $request->all();
+        $data['file'] = $file;
+
+        Mail::to('ahmed72ayyad@gmail.com')->send(new ContactUsMail($data));
+
+        return 'Email Sent';
+        // malqumbuz@gmail.com
     }
 }

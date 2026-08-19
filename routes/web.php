@@ -134,3 +134,6 @@ Route::post('/contact', [MainController::class, 'contact_data']);
 
 Route::get('/upload', [MainController::class, 'upload'])->name('upload');
 Route::post('/upload', [MainController::class, 'upload_data']);
+
+Route::get('/contact2', [MainController::class, 'contact2'])->name('contact2');
+Route::post('/contact2', [MainController::class, 'contact2_data']);
