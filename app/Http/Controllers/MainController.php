@@ -98,4 +98,21 @@ class MainController extends Controller
 
         return "Email Sent";
     }
+
+    public function upload()
+    {
+        return view('upload');
+    }
+
+    public function upload_data(Request $request)
+    {
+        // dd($request->all());
+        $name = $request->name;
+        $path = $request->file('image')->store('uploads/images');
+
+        // $_FILES['image'];
+        // move_uploaded_file();
+
+        return view('uploaded_data', compact('name', 'path'));
+    }
 }

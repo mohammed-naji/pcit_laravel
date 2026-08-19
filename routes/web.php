@@ -131,3 +131,6 @@ Route::post('/edit/{id}', [MainController::class, 'edit_user_data']);
 
 Route::get('/contact', [MainController::class, 'contact'])->name('contact');
 Route::post('/contact', [MainController::class, 'contact_data']);
+
+Route::get('/upload', [MainController::class, 'upload'])->name('upload');
+Route::post('/upload', [MainController::class, 'upload_data']);
