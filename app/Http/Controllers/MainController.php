@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
 use App\Mail\ContactUsMail;
 use App\Mail\TestMail;
+use App\Rules\WordsCount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 
 class MainController extends Controller
 {
@@ -140,5 +143,54 @@ class MainController extends Controller
 
         return 'Email Sent';
         // malqumbuz@gmail.com
+    }
+
+    public function validation()
+    {
+        return view('validation');
+    }
+
+    // public function validation_data(LoginRequest $request)
+    public function validation_data(Request $request)
+    {
+        // dd($request->all());
+        //1. validation
+        //2. upload files
+        //3. actions
+        //4. redirect
+
+        // $request->validate([
+        //     // 'email' => 'required|max:30',
+        //     // 'password' => 'required|min:6'
+        //     'email' => ['required', 'max:30'],
+        //     'password' => ['required', 'min:6']
+        // ]);
+
+        // dd($request->validated());
+
+        // Validation Type
+        //1. Request Validate
+        //2. File Request
+        //3. Validator Class
+
+        // $validator = Validator::make($request->all(), [
+        //     'email' => ['required', 'max:30'],
+        //     'password' => ['required', 'min:6']
+        // ]);
+
+        // if ($validator->fails()) {
+        //     return redirect()
+        //         ->back()
+        //         ->withErrors($validator)
+        //         ->withInput();
+        // }
+
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+            'bio' => ['required', new WordsCount(9)]
+        ]);
+
+        dd($request->all());
     }
 }

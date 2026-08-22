@@ -137,3 +137,6 @@ Route::post('/upload', [MainController::class, 'upload_data']);
 
 Route::get('/contact2', [MainController::class, 'contact2'])->name('contact2');
 Route::post('/contact2', [MainController::class, 'contact2_data']);
+
+Route::get('/validation', [MainController::class, 'validation'])->name('validation');
+Route::post('/validation', [MainController::class, 'validation_data']);
