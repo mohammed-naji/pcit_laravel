@@ -17,7 +17,7 @@ class WordsCount implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (str_word_count($value) < $this->count) {
+        if (str_word_count($value) <= $this->count) {
             $fail('The :attribute must be greater than ' . $this->count . ' words.');
         }
     }
