@@ -6,6 +6,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\PersonalController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -140,3 +141,12 @@ Route::post('/contact2', [MainController::class, 'contact2_data']);
 
 Route::get('/validation', [MainController::class, 'validation'])->name('validation');
 Route::post('/validation', [MainController::class, 'validation_data']);
+
+
+// CRUD
+// Create
+// Read
+// Update
+// Delete
+
+Route::resource('posts', PostController::class);
