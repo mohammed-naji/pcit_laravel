@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>All Posts</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous"> --}}
 </head>
 
 <body>
@@ -24,7 +26,7 @@
             </a>
         </div>
 
-        <div class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+        <div class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm mb-4">
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-slate-200">
                     <thead class="bg-slate-50">
@@ -44,13 +46,20 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-200 bg-white">
+                        @php
+                            $count = ((request()->page ?? 1) - 1) * 20 + 1;
+                        @endphp
                         @forelse ($posts as $post)
                             <tr class="transition hover:bg-slate-50">
                                 <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-slate-700">
-                                    {{ $loop->iteration }}</td>
+                                    {{-- {{ $loop->iteration }} --}}
+                                    {{-- {{ $post->id }} --}}
+                                    {{ $count }}
+                                </td>
                                 <td class="px-6 py-4 text-sm font-semibold text-slate-900">{{ $post->title }}</td>
                                 <td class="px-6 py-4">
-                                    <img src="{{ asset($post->image) }}" alt="{{ $post->title }}"
+                                    <img src="{{ $post->image ? asset($post->image) : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg' }}"
+                                        alt="{{ $post->title }}"
                                         class="h-14 w-20 rounded-md object-cover ring-1 ring-slate-200">
                                 </td>
                                 <td class="whitespace-nowrap px-6 py-4">
@@ -74,6 +83,9 @@
                                     </div>
                                 </td>
                             </tr>
+                            @php
+                                $count++;
+                            @endphp
                         @empty
                             <tr>
                                 <td colspan="4" class="px-6 py-12 text-center text-sm text-slate-500">No posts found.
@@ -83,6 +95,9 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+        <div class="mb-10">
+            {{ $posts->links() }}
         </div>
     </main>
 
