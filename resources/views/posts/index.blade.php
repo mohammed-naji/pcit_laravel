@@ -64,7 +64,7 @@
                                 </td>
                                 <td class="whitespace-nowrap px-6 py-4">
                                     <div class="flex justify-end gap-2">
-                                        <a href="{{ route('posts.show', $post) }}"
+                                        <a href="{{ route('posts.show', $post->id) }}"
                                             class="rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-100">
                                             View
                                         </a>
@@ -72,14 +72,14 @@
                                             class="rounded-md bg-amber-500 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-amber-600">
                                             Edit
                                         </a>
-                                        <form method="POST" action="{{ route('posts.destroy', $post) }}">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
-                                                class="rounded-md bg-red-600 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-red-700">
+                                        <form action="{{ route('posts.destroy', $post->id) }}" method="POST">
+                                            @method('delete')
+                                            <button onclick="return confirm('Are you sure?!')" type="submit"
+                                                class="rounded-md bg-red-600 px-3 py-1.5 text-sm cursor-pointer font-medium text-white transition hover:bg-red-700">
                                                 Delete
                                             </button>
                                         </form>
+
                                     </div>
                                 </td>
                             </tr>

@@ -149,4 +149,6 @@ Route::post('/validation', [MainController::class, 'validation_data']);
 // Update
 // Delete
 
-Route::resource('posts', PostController::class);
+Route::prefix('admin')->group(function () {
+    Route::resource('posts', PostController::class);
+});
