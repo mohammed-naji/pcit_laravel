@@ -29,4 +29,17 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // hasOne
+    // hasMany
+    // belongsTo
+    // belongsToMany
+
+    public function identity()
+    {
+        return $this->hasOne(Identity::class)->withDefault([
+            'id_num' => '-',
+            'release_date' => 'not released yet'
+        ]);
+    }
 }

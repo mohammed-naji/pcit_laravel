@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Identity;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\User;
@@ -17,14 +18,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        User::factory(10)->create();
+        Identity::factory(5)->create();
 
         // User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
 
-        Post::factory(1000)->create();
-        Tag::factory(10000)->create();
+        // Post::factory(1000)->create();
+        // Tag::factory(10000)->create();
     }
 }
