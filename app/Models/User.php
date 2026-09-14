@@ -35,6 +35,10 @@ class User extends Authenticatable
     // belongsTo
     // belongsToMany
 
+    // name, email
+    // $user->identity
+    // $user->identity->release_date
+
     public function identity()
     {
         return $this->hasOne(Identity::class)->withDefault([

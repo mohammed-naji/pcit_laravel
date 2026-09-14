@@ -106,6 +106,8 @@ use Illuminate\Support\Facades\Route;
 // Route::get('posts', [MainController::class, 'posts'])->name('posts');
 
 Route::get('/users', [UserController::class, 'all_users'])->name('all_users');
+Route::get('/identity', [UserController::class, 'identity'])->name('identity');
+Route::get('/identity-check/{id}', [UserController::class, 'identity_check']);
 
 
 Route::prefix('blog')->controller(BlogController::class)->name('blog.')->group(function () {
