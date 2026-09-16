@@ -10,6 +10,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 // Route::get('/', function () {
 //     return 'Homepage';
@@ -151,6 +152,9 @@ Route::post('/validation', [MainController::class, 'validation_data']);
 // Update
 // Delete
 
-Route::prefix('admin')->group(function () {
+Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
+    // Route::prefix('admin')->group(function () {
     Route::resource('posts', PostController::class);
+    // });
+
 });

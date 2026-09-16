@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
     <meta charset="UTF-8">
@@ -13,16 +13,17 @@
 
 <body>
 
+    {{-- {{ env('MOH_NAME') }} --}}
     <main class="mx-auto mt-10 max-w-6xl px-6">
         <div class="mb-6 flex items-center justify-between gap-4">
             <div>
-                <p class="text-sm font-medium uppercase tracking-wide text-sky-600">Blog management</p>
-                <h1 class="mt-1 text-3xl font-bold text-slate-900">All Posts</h1>
+                <p class="text-sm font-medium uppercase tracking-wide text-sky-600">{{ __('site.management') }}</p>
+                <h1 class="mt-1 text-3xl font-bold text-slate-900">{{ trans('site.all_posts') }}</h1>
             </div>
 
             <a href="{{ route('posts.create') }}"
                 class="rounded-lg bg-sky-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">
-                Add post
+                {{ __('site.add_post') }}
             </a>
         </div>
 
@@ -33,16 +34,16 @@
                         <tr>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
-                                ID</th>
+                                {{ __('site.id') }}</th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
-                                Title</th>
+                                {{ __('site.title') }}</th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
-                                Image</th>
+                                {{ __('site.img') }}</th>
                             <th scope="col"
                                 class="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wide text-slate-500">
-                                Actions</th>
+                                {{ __('site.actions') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-200 bg-white">
@@ -88,7 +89,8 @@
                             @endphp
                         @empty
                             <tr>
-                                <td colspan="4" class="px-6 py-12 text-center text-sm text-slate-500">No posts found.
+                                <td colspan="4" class="px-6 py-12 text-center text-sm text-slate-500">
+                                    {{ __('site.no_posts') }}
                                 </td>
                             </tr>
                         @endforelse

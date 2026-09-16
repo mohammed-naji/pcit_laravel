@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\File;
 
 class PostController extends Controller
@@ -11,8 +12,10 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        // App::setlocale($request->lang ?? env('APP_LOCALE'));
+
         // $posts = Post::all();
         // $posts = Post::get();
         // $posts = Post::orderBy('id', 'desc')->get();
