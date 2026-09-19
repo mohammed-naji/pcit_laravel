@@ -106,55 +106,63 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 // Route::get('posts', [MainController::class, 'posts'])->name('posts');
 
-Route::get('/users', [UserController::class, 'all_users'])->name('all_users');
-Route::get('/identity', [UserController::class, 'identity'])->name('identity');
-Route::get('/identity-check/{id}', [UserController::class, 'identity_check']);
+Route::middleware('secure')->group(function () {
+
+    Route::get('/users', [UserController::class, 'all_users'])->name('all_users');
+    Route::get('/identity', [UserController::class, 'identity'])->name('identity');
+    Route::get('/identity-check/{id}', [UserController::class, 'identity_check']);
 
 
-Route::prefix('blog')->controller(BlogController::class)->name('blog.')->group(function () {
-    Route::get('/', 'index')->name('index');
-    Route::get('/about', 'about')->name('about');
-    Route::get('/contact', 'contact')->name('contact');
-    Route::get('/post/{id}', 'post')->name('post');
+    Route::prefix('blog')->controller(BlogController::class)->name('blog.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/about', 'about')->name('about');
+        Route::get('/contact', 'contact')->name('contact');
+        Route::get('/post/{id}', 'post')->name('post');
+    });
+
+    Route::prefix('personal')->name('personal.')->group(function () {
+        Route::get('/', [PersonalController::class, 'index'])->name('index');
+        Route::get('/resume', [PersonalController::class, 'resume'])->name('resume');
+        Route::get('/projects', [PersonalController::class, 'projects'])->name('projects');
+        Route::get('/contact', [PersonalController::class, 'contact'])->name('contact');
+        Route::post('/contact-action', [PersonalController::class, 'contact_action'])->name('contact_action');
+    });
+
+    Route::get('/register', [StudentController::class, 'register'])->name('students.register');
+    Route::post('/register', [StudentController::class, 'register_data']);
+
+
+    Route::get('/edit/{id}', [MainController::class, 'edit_user'])->name('edit_user');
+    Route::post('/edit/{id}', [MainController::class, 'edit_user_data']);
+
+    Route::get('/contact', [MainController::class, 'contact'])->name('contact');
+    Route::post('/contact', [MainController::class, 'contact_data']);
+
+    Route::get('/upload', [MainController::class, 'upload'])->name('upload');
+    Route::post('/upload', [MainController::class, 'upload_data']);
+
+    Route::get('/contact2', [MainController::class, 'contact2'])->name('contact2');
+    Route::post('/contact2', [MainController::class, 'contact2_data']);
+
+    Route::get('/validation', [MainController::class, 'validation'])->name('validation');
+    Route::post('/validation', [MainController::class, 'validation_data']);
+
+
+    // CRUD
+    // Create
+    // Read
+    // Update
+    // Delete
+
+    Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
+        // Route::prefix('admin')->group(function () {
+        Route::resource('posts', PostController::class);
+        // });
+
+    });
 });
 
-Route::prefix('personal')->name('personal.')->group(function () {
-    Route::get('/', [PersonalController::class, 'index'])->name('index');
-    Route::get('/resume', [PersonalController::class, 'resume'])->name('resume');
-    Route::get('/projects', [PersonalController::class, 'projects'])->name('projects');
-    Route::get('/contact', [PersonalController::class, 'contact'])->name('contact');
-    Route::post('/contact-action', [PersonalController::class, 'contact_action'])->name('contact_action');
-});
 
-Route::get('/register', [StudentController::class, 'register'])->name('students.register');
-Route::post('/register', [StudentController::class, 'register_data']);
-
-
-Route::get('/edit/{id}', [MainController::class, 'edit_user'])->name('edit_user');
-Route::post('/edit/{id}', [MainController::class, 'edit_user_data']);
-
-Route::get('/contact', [MainController::class, 'contact'])->name('contact');
-Route::post('/contact', [MainController::class, 'contact_data']);
-
-Route::get('/upload', [MainController::class, 'upload'])->name('upload');
-Route::post('/upload', [MainController::class, 'upload_data']);
-
-Route::get('/contact2', [MainController::class, 'contact2'])->name('contact2');
-Route::post('/contact2', [MainController::class, 'contact2_data']);
-
-Route::get('/validation', [MainController::class, 'validation'])->name('validation');
-Route::post('/validation', [MainController::class, 'validation_data']);
-
-
-// CRUD
-// Create
-// Read
-// Update
-// Delete
-
-Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
-    // Route::prefix('admin')->group(function () {
-    Route::resource('posts', PostController::class);
-    // });
-
+Route::get('unauthorized', function () {
+    return "unauthorized access";
 });
