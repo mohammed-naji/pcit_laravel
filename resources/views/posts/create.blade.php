@@ -27,9 +27,15 @@
         </div>
 
         <form method="POST" action="{{ route('posts.store') }}" enctype="multipart/form-data">
-            <x-input name="title" label="Title" />
+            <div class="grid grid-cols-2 gap-4">
+                <x-input name="title_en" label="English Title" />
+                <x-input name="title_ar" label="Arabic Title" />
+            </div>
             <x-input name="image" label="Image" type="file" />
-            <x-textarea name="content" label="Content" />
+            <div class="grid grid-cols-2 gap-4">
+                <x-textarea name="content_en" label="English Content" />
+                <x-textarea name="content_ar" label="Arabic Content" />
+            </div>
             <button
                 class="rounded-lg bg-sky-600 px-10 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">Post</button>
         </form>

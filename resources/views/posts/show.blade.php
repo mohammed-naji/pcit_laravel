@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ $post->title }}</title>
+    <title>{{ $post->title[app()->getLocale()] }}</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous"> --}}
@@ -16,7 +16,8 @@
     <main class="mx-auto mt-10 max-w-6xl px-6">
         <div class="mb-6 flex items-center justify-between gap-4">
             <div>
-                <p class="text-sm font-medium uppercase tracking-wide text-sky-600">{{ $post->title }}</p>
+                <p class="text-sm font-medium uppercase tracking-wide text-sky-600">
+                    {{ $post->title[app()->getLocale()] }}</p>
                 <h1 class="mt-1 text-3xl font-bold text-slate-900">All Posts</h1>
             </div>
 
@@ -28,7 +29,7 @@
 
         <img src="{{ asset($post->image) }}" alt="">
 
-        {{ $post->content }}
+        {{ $post->content[app()->getLocale()] }}
     </main>
 
 

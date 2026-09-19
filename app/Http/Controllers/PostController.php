@@ -44,7 +44,8 @@ class PostController extends Controller
     {
         //1. validation
         $request->validate([
-            'title' => 'required',
+            'title_en' => 'required',
+            'title_ar' => 'required',
             'image' => 'nullable|image|mimes:png,jpg,jpeg'
         ]);
 
@@ -55,10 +56,25 @@ class PostController extends Controller
         }
 
         //3. store in database
+        // $title = json_encode([
+        //     'en' => $request->title_en,
+        //     'ar' => $request->title_ar,
+        // ]);
+        // $content = json_encode([
+        //     'en' => $request->content_en,
+        //     'ar' => $request->content_ar,
+        // ]);
+
         Post::create([
-            'title' => $request->title,
+            'title' => [
+                'en' => $request->title_en,
+                'ar' => $request->title_ar,
+            ],
             'image' => $path,
-            'content' => $request->content,
+            'content' => [
+                'en' => $request->content_en,
+                'ar' => $request->content_ar,
+            ],
         ]);
 
         flash()->success('Post created successfully!');
@@ -94,7 +110,8 @@ class PostController extends Controller
     {
         //1. validation
         $request->validate([
-            'title' => 'required',
+            'title_en' => 'required',
+            'title_ar' => 'required',
             'image' => 'nullable|image|mimes:png,jpg,jpeg'
         ]);
 
@@ -107,9 +124,15 @@ class PostController extends Controller
 
         //3. store in database
         $post->update([
-            'title' => $request->title,
+            'title' => [
+                'en' => $request->title_en,
+                'ar' => $request->title_ar,
+            ],
             'image' => $path,
-            'content' => $request->content,
+            'content' => [
+                'en' => $request->content_en,
+                'ar' => $request->content_ar,
+            ],
         ]);
 
         flash()->warning('Post updated successfully!');

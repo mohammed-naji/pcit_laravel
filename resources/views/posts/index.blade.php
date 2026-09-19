@@ -9,6 +9,16 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous"> --}}
+    @if (app()->currentLocale() == 'ar')
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap');
+
+            body {
+                font-family: "Cairo", sans-serif;
+                text-align: right;
+            }
+        </style>
+    @endif
 </head>
 
 <body>
@@ -21,10 +31,25 @@
                 <h1 class="mt-1 text-3xl font-bold text-slate-900">{{ trans('site.all_posts') }}</h1>
             </div>
 
-            <a href="{{ route('posts.create') }}"
-                class="rounded-lg bg-sky-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">
-                {{ __('site.add_post') }}
-            </a>
+            <div class="flex gap-7 items-center">
+                <ul class="flex gap-4">
+                    @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                        @if (app()->getLocale() != $localeCode)
+                            <li>
+                                <a rel="alternate" hreflang="{{ $localeCode }}"
+                                    href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                    {{ $properties['native'] }}
+                                </a>
+                            </li>
+                        @endif
+                    @endforeach
+                </ul>
+                <a href="{{ route('posts.create') }}"
+                    class="rounded-lg bg-sky-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">
+                    {{ __('site.add_post') }}
+                </a>
+            </div>
+
         </div>
 
         <div class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm mb-4">
@@ -57,10 +82,11 @@
                                     {{-- {{ $post->id }} --}}
                                     {{ $count }}
                                 </td>
-                                <td class="px-6 py-4 text-sm font-semibold text-slate-900">{{ $post->title }}</td>
+                                <td class="px-6 py-4 text-sm font-semibold text-slate-900">
+                                    {{ $post->trans_title }}</td>
                                 <td class="px-6 py-4">
                                     <img src="{{ $post->image ? asset($post->image) : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg' }}"
-                                        alt="{{ $post->title }}"
+                                        alt="{{ $post->trans_title }}"
                                         class="h-14 w-20 rounded-md object-cover ring-1 ring-slate-200">
                                 </td>
                                 <td class="whitespace-nowrap px-6 py-4">
