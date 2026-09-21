@@ -4,9 +4,10 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class CheckAuth
+class CheckAdmin
 {
     /**
      * Handle an incoming request.
@@ -15,8 +16,8 @@ class CheckAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-
-        // if ($request->pass == null || $request->pass != 123) return redirect('/unauthorized');
+        // dd(Auth::user());
+        if (Auth::user()->type != 'admin') return redirect('/');
 
         return $next($request);
     }

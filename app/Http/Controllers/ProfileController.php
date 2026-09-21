@@ -2,55 +2,59 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProfileUpdateRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
     /**
-     * Show the form for creating the resource.
+     * Display the user's profile form.
      */
-    public function create(): never
+    public function edit(Request $request): View
     {
-        abort(404);
+        return view('profile.edit', [
+            'user' => $request->user(),
+        ]);
     }
 
     /**
-     * Store the newly created resource in storage.
+     * Update the user's profile information.
      */
-    public function store(Request $request): never
+    public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        abort(404);
+        $request->user()->fill($request->validated());
+
+        if ($request->user()->isDirty('email')) {
+            $request->user()->email_verified_at = null;
+        }
+
+        $request->user()->save();
+
+        return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
     /**
-     * Display the resource.
+     * Delete the user's account.
      */
-    public function show()
+    public function destroy(Request $request): RedirectResponse
     {
-        //
-    }
+        $request->validateWithBag('userDeletion', [
+            'password' => ['required', 'current_password'],
+        ]);
 
-    /**
-     * Show the form for editing the resource.
-     */
-    public function edit()
-    {
-        //
-    }
+        $user = $request->user();
 
-    /**
-     * Update the resource in storage.
-     */
-    public function update(Request $request)
-    {
-        //
-    }
+        Auth::logout();
 
-    /**
-     * Remove the resource from storage.
-     */
-    public function destroy(): never
-    {
-        abort(404);
+        $user->delete();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return Redirect::to('/');
     }
 }

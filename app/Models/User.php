@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['name', 'email', 'password', 'mobile'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -43,7 +43,7 @@ class User extends Authenticatable
     {
         return $this->hasOne(Identity::class)->withDefault([
             'id_num' => '-',
-            'release_date' => 'not released yet'
+            'release_date' => 'not released yet',
         ]);
     }
 }

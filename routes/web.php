@@ -7,6 +7,7 @@ use App\Http\Controllers\ExportController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\PersonalController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -31,7 +32,6 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 // });
 
 // Route::match(['put', 'patch', 'post'], '/', function () {});
-
 
 // Route::fallback(function () {
 //     // return 'هادي الصفحة مش موجودة اخوي بعينك الله دور على رابط تاني';
@@ -112,7 +112,6 @@ Route::middleware('secure')->group(function () {
     Route::get('/identity', [UserController::class, 'identity'])->name('identity');
     Route::get('/identity-check/{id}', [UserController::class, 'identity_check']);
 
-
     Route::prefix('blog')->controller(BlogController::class)->name('blog.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/about', 'about')->name('about');
@@ -131,7 +130,6 @@ Route::middleware('secure')->group(function () {
     Route::get('/register', [StudentController::class, 'register'])->name('students.register');
     Route::post('/register', [StudentController::class, 'register_data']);
 
-
     Route::get('/edit/{id}', [MainController::class, 'edit_user'])->name('edit_user');
     Route::post('/edit/{id}', [MainController::class, 'edit_user_data']);
 
@@ -147,7 +145,6 @@ Route::middleware('secure')->group(function () {
     Route::get('/validation', [MainController::class, 'validation'])->name('validation');
     Route::post('/validation', [MainController::class, 'validation_data']);
 
-
     // CRUD
     // Create
     // Read
@@ -162,7 +159,22 @@ Route::middleware('secure')->group(function () {
     });
 });
 
-
 Route::get('unauthorized', function () {
-    return "unauthorized access";
+    return 'unauthorized access';
 });
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__ . '/auth.php';
