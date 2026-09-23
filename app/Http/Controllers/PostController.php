@@ -26,7 +26,7 @@ class PostController extends Controller
 
         // SELECT * FROM posts ORDER BY id DESC;
 
-        return view('posts.index', compact('posts'));
+        return view('dashboard.posts.index', compact('posts'));
     }
 
     /**

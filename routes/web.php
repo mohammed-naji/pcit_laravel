@@ -10,6 +10,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -151,30 +152,37 @@ Route::middleware('secure')->group(function () {
     // Update
     // Delete
 
-    Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
-        // Route::prefix('admin')->group(function () {
-        Route::resource('posts', PostController::class);
-        // });
 
-    });
 });
 
 Route::get('unauthorized', function () {
     return 'unauthorized access';
 });
 
-Route::get('/', function () {
-    return view('welcome');
+
+Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
+
+
+    Route::get('/', function () {
+        return view('welcome');
+    });
+
+    Route::middleware(['auth', 'role:admin|writer'])->group(function () {
+        Route::get('/dashboard', function () {
+            // dd(Auth::user()->can('articles.delete'));
+            return view('dashboard');
+        })->name('dashboard');
+
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+        Route::prefix('dashboard')->group(function () {
+            Route::resource('posts', PostController::class);
+        });
+    });
+
+
+
+    require __DIR__ . '/auth.php';
 });
-
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
-require __DIR__ . '/auth.php';
