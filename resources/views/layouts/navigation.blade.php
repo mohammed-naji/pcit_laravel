@@ -19,6 +19,12 @@
                     <x-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.index')">
                         {{ __('Posts') }}
                     </x-nav-link>
+
+                    @if (auth()->user()->hasRole('admin'))
+                        <x-nav-link :href="route('dashboard.users')" :active="request()->routeIs('dashboard.users')">
+                            {{ __('Users') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 

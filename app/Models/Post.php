@@ -36,6 +36,11 @@ class Post extends Model
         return $this->title['ar'];
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class)->withDefault();
+    }
+
     // $post->image
     // public function getImageAttribute() {
 

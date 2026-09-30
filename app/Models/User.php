@@ -47,4 +47,9 @@ class User extends Authenticatable
             'release_date' => 'not released yet',
         ]);
     }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }

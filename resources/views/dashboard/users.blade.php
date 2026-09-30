@@ -4,14 +4,9 @@
             <div class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 <p class="text-sm font-medium uppercase tracking-wide text-sky-600">
                     {{ __('site.management') }}</p>
-                <h1 class="mt-1 text-3xl font-bold text-slate-900">{{ trans('site.all_posts') }}</h1>
+                <h1 class="mt-1 text-3xl font-bold text-slate-900">{{ __('Users') }}</h1>
             </div>
-            @can('articles.create')
-                <a href="{{ route('posts.create') }}"
-                    class="rounded-lg bg-sky-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">
-                    {{ __('site.add_post') }}
-                </a>
-            @endcan
+
 
         </div>
     </x-slot>
@@ -30,10 +25,10 @@
                                             {{ __('site.id') }}</th>
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
-                                            {{ __('site.title') }}</th>
+                                            {{ __('Name') }}</th>
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
-                                            {{ __('site.img') }}</th>
+                                            {{ __('Role') }}</th>
                                         <th scope="col"
                                             class="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wide text-slate-500">
                                             {{ __('site.actions') }}</th>
@@ -43,48 +38,26 @@
                                     @php
                                         $count = ((request()->page ?? 1) - 1) * 20 + 1;
                                     @endphp
-                                    @forelse ($posts as $post)
+                                    @forelse ($users as $user)
                                         <tr class="transition hover:bg-slate-50">
                                             <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-slate-700">
                                                 {{-- {{ $loop->iteration }} --}}
-                                                {{-- {{ $post->id }} --}}
+                                                {{-- {{ $user->id }} --}}
                                                 {{ $count }}
                                             </td>
                                             <td class="px-6 py-4 text-sm font-semibold text-slate-900">
-                                                {{ $post->trans_title }}</td>
+                                                {{ $user->name }}</td>
                                             <td class="px-6 py-4">
-                                                <img src="{{ $post->image ? asset($post->image) : 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg' }}"
-                                                    alt="{{ $post->trans_title }}"
-                                                    class="h-14 w-20 rounded-md object-cover ring-1 ring-slate-200">
+                                                <select onchange="updateRole(event, '{{ $user->id }}')"
+                                                    class="rounded w-36 block">
+                                                    @foreach ($roles as $role)
+                                                        <option @selected($user->hasRole($role->name))
+                                                            value="{{ $role->name }}">{{ $role->name }}</option>
+                                                    @endforeach
+                                                </select>
                                             </td>
                                             <td class="whitespace-nowrap px-6 py-4">
                                                 <div class="flex justify-end gap-2">
-                                                    @can('articles.view')
-                                                        <a href="{{ route('posts.show', $post->id) }}"
-                                                            class="rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-100">
-                                                            View
-                                                        </a>
-                                                    @endcan
-
-                                                    @can('articles.edit')
-                                                        <a href="{{ route('posts.edit', $post) }}"
-                                                            class="rounded-md bg-amber-500 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-amber-600">
-                                                            Edit
-                                                        </a>
-                                                    @endcan
-
-
-                                                    @can('delete', $post)
-                                                        <form action="{{ route('posts.destroy', $post->id) }}"
-                                                            method="POST">
-                                                            @method('delete')
-                                                            <button onclick="return confirm('Are you sure?!')"
-                                                                type="submit"
-                                                                class="rounded-md bg-red-600 px-3 py-1.5 text-sm cursor-pointer font-medium text-white transition hover:bg-red-700">
-                                                                Delete
-                                                            </button>
-                                                        </form>
-                                                    @endcan
 
 
                                                 </div>
@@ -105,10 +78,35 @@
                         </div>
                     </div>
                     <div class="mb-10">
-                        {{ $posts->links() }}
+                        {{ $users->links() }}
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        function updateRole(e, userId) {
+            console.log(e.target.value, userId);
+            fetch('{{ route('dashboard.user.role') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': document
+                        .querySelector('meta[name="csrf-token"]')
+                        .getAttribute('content'),
+                },
+                body: JSON.stringify({
+                    userId: userId,
+                    role: e.target.value
+                })
+            }).then((res) => {
+                console.log(res);
+                alert('user role updated')
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
+    </script>
 </x-app-layout>

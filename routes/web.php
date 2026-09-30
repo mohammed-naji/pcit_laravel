@@ -3,6 +3,7 @@
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\Course1Controller;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\Dashboard\UserController as DashboardUserController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\PersonalController;
@@ -179,6 +180,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
         Route::prefix('dashboard')->group(function () {
             Route::resource('posts', PostController::class);
+            Route::get('/users', [DashboardUserController::class, 'index'])->name('dashboard.users');
+            Route::post('/user/role', [DashboardUserController::class, 'role'])->name('dashboard.user.role');
         });
     });
 

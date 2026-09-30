@@ -6,6 +6,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
@@ -100,6 +101,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+
+
         return view('posts.edit', compact('post'));
     }
 
@@ -146,6 +149,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        // $this->authorize('delete', $post);
+        Gate::authorize('delete', $post);
         // dd('Deleted');
         // DELETE FROM posts WHERE id = 10;
         // $post->destroy();
